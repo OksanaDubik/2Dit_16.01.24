@@ -590,7 +590,7 @@ hr {
 
 /*Form*/
 .form__block {
-    margin: 100px auto;
+    margin: 100px auto 0;
     background-image: url("../images/form/backr4.jpg");
     background-color: #460202;
     background-size: cover;
@@ -652,7 +652,8 @@ input[name="telRF"] {
 .form__block-wrap {
     padding: 209px 0 186px;
        width: 81vw;
-    margin: 0 11.18vw 186px 8.09vw;
+    margin: 0 11.18vw 0 8.09vw;
+
 }
 
 .form__block-inputs {
