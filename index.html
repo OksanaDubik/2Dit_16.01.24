@@ -385,9 +385,9 @@
     <div class="form__block-wrap">
         <h1>Оставите заявку</h1>
         <p>И наш специалист свяжется с вами</p>
-        <form action="#" method="post" id="form">
-            <div class="form__block-inputs">
-                <input type="text" name="text" placeholder="Ваше имя">
+        <form  id="form" onsubmit="sendEmailTelegram(event)">
+                  <div class="form__block-inputs">
+                <input type="text" name="user" placeholder="Ваше имя">
 
                 <div class="form__block-country__tel">
                     <div class="form__block-country__choice">
@@ -414,7 +414,7 @@
                     <a href="#" target="_blank">пользовательское соглашение</a>, соглашаюсь с политикой
                     конфиденциальности, условиями пользования сайтом, передачей и обработкой моих персональных данных
                 </p>
-                <button type="submit">Оформить заявку</button>
+                <button  type="submit">Оформить заявку</button>
             </div>
         </form>
     </div>

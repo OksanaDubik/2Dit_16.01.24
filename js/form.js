@@ -1,4 +1,3 @@
-
 let buttonCountry = document.querySelector('.form__block-country');
 
 buttonCountry.addEventListener('click', function () {
@@ -71,28 +70,69 @@ openInput(flagOth1)
 function validation(form) {
 
     let allInputs = form.querySelectorAll('input')
+    let inpTel = document.querySelector('.form__block-country__tel')
     let result = true;
-    for (const input of allInputs) {
-        input.style.borderColor = '#fff'
-        document.querySelector('.form__block-country__tel').style.borderColor = '#fff'
-
-        if (input.value === '') {
-            document.querySelector('.form__block-country__tel').style.borderColor = '#d97373'
-            input.style.borderColor = '#d97373'
-            alert('поле не заполнено')
-            result = false
-            return
-        } else {
-            input.value = ''
-        }
+    let inpTelValue = document.querySelector('input[name = "telRF"]')
+    inpTel.style.borderColor = '#fff'
+    if (inpTelValue.value === '') {
+        inpTel.style.borderColor = '#d97373'
+        result = false
 
     }
-    result === true ? alert("Форма отправлена") : alert("Ошибка! Форма не отправлена")
+    for (const input of allInputs) {
+        input.style.borderColor = '#fff'
+
+
+        if (input.value === '') {
+            input.style.borderColor = '#d97373'
+            result = false
+
+        }
+    }
+
+    if (result === false) {
+        alert("Форма не отправлена, проверьте правильность заполнения полей")
+    }
     return result
 }
 
-document.getElementById('form').addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    validation(this)
-})
+const TELEGRAM_BOT_TOKEN = '6909770478:AAETbJbL9TvfI7e3eTVXMMFYvmUe7PrNDqY';
+const TELEGRAM_CHAT_ID = '-1002037694009';
+const API = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
+
+async function sendEmailTelegram(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formBtn = document.querySelector('.form__block-text__submit button');
+    const {user, telRF, email} = Object.fromEntries(new FormData(form).entries());
+    const text = `заявка от ${user}, телефон:${telRF} , Email:${email}`;
+    if (user !== '' && telRF !== '' && email !== '') {
+        try {
+            formBtn.textContent = 'Loading...';
+
+            const response = await fetch(API, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text,
+                })
+            });
+            if (response.ok) {
+                alert("Форма отправлена")
+                form.reset()
+            } else {
+                throw new Error(response.statusText)
+            }
+        } catch (error) {
+            console.error(error + "Ошибка! Форма не отправлена")
+            alert("Ошибка! Форма не отправлена")
+        } finally {
+            formBtn.textContent = 'Оформить заявку'
+        }
+    } else {
+        validation(form)
+    }
+}
 

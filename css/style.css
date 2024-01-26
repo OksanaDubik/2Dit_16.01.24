@@ -612,6 +612,9 @@ hr {
     font-size: 18px;
     line-height: 150%
 }
+input{
+    color: #FFFFFF;
+}
 
 input:active, input:focus {
     outline: none
